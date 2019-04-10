@@ -2,7 +2,7 @@
 Discrete Mathematics &amp; Declarative Programming Group Assignment
 
 Group Members: 
-  Alousseynou Prince
-  Dragos-Andrei Illies
-  Sabah Saddiq
-  Sifat Jahir
+  Alousseynou Prince  
+  Dragos-Andrei Illies  
+  Sabah Saddiq  
+  Sifat Jahir  
