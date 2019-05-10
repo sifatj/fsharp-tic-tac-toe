@@ -1,5 +1,7 @@
 ﻿// Learn more about F# at http://fsharp.org
 // See the 'F# Tutorial' project for more help.
+open System
+
 
 type Player =  
     |X 
@@ -9,13 +11,11 @@ type Cell =
     |P of Player
     |Empty
 
-//let (|Cell|) (P x, Empty) = Cell Player
-type Status = 
-    |Won
-    |Draw
-    |Progress
-
     //
+type Status = 
+    |Won //hasWon (P x) grid -> Won -> x
+    |Draw           //
+    |InProgress
 
 let switchPlayer (p:Player)  = 
     match p with
@@ -23,18 +23,58 @@ let switchPlayer (p:Player)  =
     |O -> X
 
 
+let hasWon x (grid:Cell [,]) = 
+    match grid with
+    //horizontal check
+    |arr when grid.[0, 0] = x && grid.[0,1] = x && grid.[0, 2] = x || grid.[1, 0] = x && grid.[1, 1] = x && grid.[1, 2] = x || grid.[2, 0] = x && grid.[2, 1] = x && grid.[2, 2] = x -> true
+    //vertical checks
+    |arr when grid.[0, 0] = x && grid.[1, 0] = x && grid.[2, 0] = x || grid.[0, 1] = x && grid.[1, 1] = x && grid.[2, 1] = x || grid.[0, 2] = x && grid.[1, 2] = x && grid.[2, 2] = x -> true
+    //diagonal checks
+    |arr when grid.[0, 0] = x && grid.[1, 1] = x && grid.[2, 2] = x || grid.[0, 2] = x && grid.[1, 1] = x && grid.[0, 2] = x -> true
+    |_ -> false
+
+let hasDrawn x (grid:Cell [,]) = 
+    let available_cells = grid |> Seq.cast<Cell> |> Seq.filter (fun x -> x = Empty)
+    Seq.isEmpty available_cells
+
+
+
+let checkGridStatus x grid =
+    if hasWon x grid then Won
+    else if hasDrawn x grid then Draw
+    else InProgress
+
+
+let rec changeGameState player (grid:Cell [,]) = 
+    printfn "%A
+    
+    " grid 
+    //Ask user for input
+    printfn "Please input the row number"
+    let xpos = Console.ReadLine() |> int
+    printfn "Please input the column number"
+    let ypos = Console.ReadLine() |> int
+    //Modify grid
+    let addToken xpos ypos (token:Player) (grid:Cell [,]) = grid.[xpos,ypos] <- P token
+    addToken xpos ypos player grid
+    //Check grid status
+    let status = checkGridStatus (P player) grid
+    printf "The status is: %A
+
+    " status
+    match status with
+        |Won -> printfn "Player %A has won the game!!" player
+        |Draw -> printfn "Oi! it's a draw!"
+        |InProgress -> changeGameState (switchPlayer player) grid
+
 let localGame() = 
     let grid = array2D [[ Empty; Empty; Empty ]
                         [ Empty; Empty; Empty ]
                         [ Empty; Empty; Empty ]] 
-    0
-         
-
-    //Let player choose
-    //Make change to choose
-    //Modify grid
-    //Check new grid
-    //Repeat with new player
+    printfn "Working with local game
+    
+    " 
+    changeGameState X grid
 
 let rec onlineGame() = 
     printfn "You have these choices:
@@ -65,7 +105,7 @@ let rec playMPGame() =
         |2 -> onlineGame()
         |_ -> playMPGame()
 
-let playAIGame = printfn "Playing agaisnt AI"
+let playAIGame = ()//printfn "Playing agaisnt AI"
 
 
 let viewLeaderboard() = printfn "Viewing the leaderboard"
