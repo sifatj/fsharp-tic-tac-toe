@@ -1,7 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
-// See the 'F# Tutorial' project for more help.
-open System
-
+﻿open System
 
 type Player =  
     |X 
@@ -13,8 +10,8 @@ type Cell =
 
     //
 type Status = 
-    |Won //hasWon (P x) grid -> Won -> x
-    |Draw           //
+    |Won 
+    |Draw
     |InProgress
 
 let switchPlayer (p:Player)  = 
@@ -44,6 +41,19 @@ let checkGridStatus x grid =
     else if hasDrawn x grid then Draw
     else InProgress
 
+let gameLostByPlayer player =
+    printfn "Player %A has lost the game!!" player
+    //keep track of score
+    
+
+let gameWonByPlayer player = 
+    printfn "Player %A has won the game!!" player
+    //keep track of score
+        //Please insert your name
+        //Save score?
+    //Other player lost so call that
+    gameLostByPlayer (switchPlayer player)
+
 
 let rec changeGameState player (grid:Cell [,]) = 
     printfn "%A
@@ -63,7 +73,7 @@ let rec changeGameState player (grid:Cell [,]) =
 
     " status
     match status with
-        |Won -> printfn "Player %A has won the game!!" player
+        |Won -> gameWonByPlayer player
         |Draw -> printfn "Oi! it's a draw!"
         |InProgress -> changeGameState (switchPlayer player) grid
 
