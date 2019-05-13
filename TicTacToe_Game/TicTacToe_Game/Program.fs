@@ -6,7 +6,7 @@ module Program =
     open Command
 
     //open GameAI
-    //open GameMP
+    //open GameMP//
     open GameLocal
 
     let PlayMessage = @"This is a help message"

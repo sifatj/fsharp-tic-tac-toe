@@ -9,8 +9,8 @@ module Helper =
        else None
 
     type Player =  
-    |X 
-    |O
+        |X 
+        |O
 
     type Cell = 
         |P of Player
