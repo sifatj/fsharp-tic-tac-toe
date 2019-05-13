@@ -1,8 +1,8 @@
 ﻿namespace TicTacToe_Game
 module Program =
-    open FSharpPlus
     open Helper
     open Error
+    open FSharpPlus
     open Command
 
     //open GameAI
@@ -17,18 +17,23 @@ module Program =
     let ViewLeaderboardPattern = @"^\s*[Vv][Ii][Ee][Ww]\s*$" //Modify these to have space
 
 
-    let runCommand x = 
-        match x with
-        |Result.Ok PlayAI -> printfn "Play AI boi"
-        |Result.Ok PlayLocal -> playGameLocal
-        |Result.Ok PlayMP -> printfn "PlayMP"
-        |Result.Ok ViewLeaderboard -> printfn "Leaderboard"
-        |Result.Error BlankError -> BlankError |> Error.GetErrorMessage |> printfn "%s"
-        |Result.Error ParseError -> ParseError |> Error.GetErrorMessage |> printfn "%s"
+    
+    let handleResult res = 
+        match res with 
+        |Result.Ok (msg)->
+        printfn "%s" msg //show the result
+        |Result.Error err->
+                err |> Error.GetErrorMessage |> printfn "%s"
 
+    let rec mainGame() = 
+        printf "Please input the type of game you wish to play or view leaderboard (AIGame,LocalGame,MPGame,Leaderboard): "
+        System.Console.ReadLine() |> (Command.parseCommand >=> runCommand) |> handleResult 
+        mainGame()
+
+                    
+
+
+       
     [<EntryPoint>]
     let main argv = //
-        let rec gameMain = 
-            System.Console.ReadLine() |> (Command.parseCommand >> runCommand)
- 
-        0 
+        mainGame()
