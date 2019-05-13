@@ -2,7 +2,6 @@
 module Command =
     open Helper
     open Error
-
     open GameLocal
 
     let PlayMessage = @"This is a help message"
@@ -11,7 +10,7 @@ module Command =
     let PlayLocalPattern = @"^\s*[Pp][Ll][Aa][Yy][Ll][Oo][Cc][Aa][Ll]\s*$"
     let PlayMPPattern = @"^\s*[Pp][Ll][Aa][Yy][Mm][Pp]\s*$"
     let ViewLeaderboardPattern = @"^\s*[Vv][Ii][Ee][Ww]\s*$" //Modify these to have space
-
+   
     type Command = 
         |PlayAI
         |PlayLocal
@@ -34,11 +33,12 @@ module Command =
     let runCommand x  =
         match x with
         |PlayAI ->
-            let result = playGameLocal()
+            let result = "Result of Play ai" 
             Result.Ok (sprintf "%s" result)
         |PlayLocal ->
-            let result = playGameLocal()
-            Result.Ok (sprintf "%s" result)
+            let result = playGameLocal() 
+            let (str,token) = result
+            Result.Ok (sprintf "%s %A" str token)
         |PlayMP ->
             let result = "Result of Play mp" 
             Result.Ok (sprintf "%s" result)

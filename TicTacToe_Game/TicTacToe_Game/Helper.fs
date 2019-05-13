@@ -26,7 +26,24 @@ module Helper =
         match p with
         |X -> O
         |O -> X
+    
+    let isEmpty newerGrid = newerGrid |> Seq.cast<Cell> |> Seq.mapi (fun i el -> (el, i)) |> Seq.filter (fun (el,i) -> el =  Empty)
 
+    let ToTuple elIndexTup = elIndexTup |> Seq.map (fun (x, y) -> 
+        match (x, y) with
+        |(_, y) when y = 1 -> (0, 1)
+        |(_, y) when y = 0 -> (0, 0)
+        |(_, y) when y = 2 -> (0, 2)
+        |(_, y) when y = 3 -> (1, 0)
+        |(_, y) when y = 4 -> (1, 1)
+        |(_, y) when y = 5 -> (1, 2)
+        |(_, y) when y = 6 -> (2, 0)
+        |(_, y) when y = 7 -> (2, 1)
+        |(_, y) when y = 8 -> (2, 2)
+        |_ -> (20, 20)
+        )
+    //let cells_tuple () = (Array2D.create 3 3 Empty |> Seq.cast<Cell> |> Seq.filter (fun (el i) -> el = Empty)
+    //)
     let hasWon x (grid:Cell [,]) = 
         match grid with
         //horizontal check
@@ -39,12 +56,15 @@ module Helper =
 
     let hasDrawn x (grid:Cell [,]) = 
         let available_cells = grid |> Seq.cast<Cell> |> Seq.filter (fun x -> x = Empty)
+        
         Seq.isEmpty available_cells
 
     let drawBoard (board:Cell [,]) = 
         printfn "%A | %A | %A " board.[0,0] board.[0,1] board.[0,2]
         printfn "%A | %A | %A " board.[1,0] board.[1,1] board.[1,2]
         printfn "%A | %A | %A " board.[2,0] board.[2,1] board.[2,2]
+     //separate frunction that takes in a grid cell and converts it based on value X O or Empty
+
 
     let checkGridStatus x grid =
         if hasWon x grid then Won
