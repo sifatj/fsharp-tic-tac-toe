@@ -41,7 +41,10 @@ module Helper =
         let available_cells = grid |> Seq.cast<Cell> |> Seq.filter (fun x -> x = Empty)
         Seq.isEmpty available_cells
 
-
+    let drawBoard (board:Cell [,]) = 
+        printfn "%A | %A | %A " board.[0,0] board.[0,1] board.[0,2]
+        printfn "%A | %A | %A " board.[1,0] board.[1,1] board.[1,2]
+        printfn "%A | %A | %A " board.[2,0] board.[2,1] board.[2,2]
 
     let checkGridStatus x grid =
         if hasWon x grid then Won

@@ -6,6 +6,7 @@ module GameLocal =
     let playGameLocal() =
         let grid = Array2D.create 3 3 Empty
         let rec updateGame grid (token:Player) = 
+            drawBoard grid
             printfn "Please input the row number"  //Mathc response with and format tupple and destroy
             let xpos = Console.ReadLine() |> int
             printfn "Please input the column number"
@@ -14,8 +15,8 @@ module GameLocal =
             let newGrid = getNewGrid grid xpos ypos token
             let status = checkGridStatus (P token) newGrid
             match status with
-            |Won -> Won
-            |Draw -> Draw
+            |Won -> "Won"
+            |Draw -> "Draw"
             |InProgress -> updateGame newGrid (switchPlayer token)
         updateGame grid X
     

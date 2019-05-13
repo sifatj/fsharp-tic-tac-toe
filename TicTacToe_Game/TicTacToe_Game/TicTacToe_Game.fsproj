@@ -50,8 +50,8 @@
     <Content Include="packages.config" />
     <Compile Include="Helper.fs" />
     <Compile Include="Error.fs" />
-    <Compile Include="Command.fs" />
     <Compile Include="GameLocal.fs" />
+    <Compile Include="Command.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
