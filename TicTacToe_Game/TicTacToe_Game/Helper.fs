@@ -1,12 +1,15 @@
 ﻿namespace TicTacToe_Game
 module Helper =
     open System.Text.RegularExpressions
+    open System
 
     let (|ParseRegex|_|) regex str =
        let m = Regex(regex).Match(str)
        if m.Success
        then Some (List.tail [ for x in m.Groups -> x.Value ])
        else None
+
+    
 
     type Player =  
     |X 
@@ -16,16 +19,40 @@ module Helper =
         |P of Player
         |Empty
 
-        //
     type Status = 
         |Won 
         |Draw
         |InProgress
 
-    let switchPlayer (p:Player)  = 
-        match p with
-        |X -> O
-        |O -> X
+    type playerData = {name:string;pToken:Player} //Player information
+
+    let rec getInputs() = 
+       printfn "Please input the row number"  //Dificulties - making it more compact ,  when last match expression is done that I get the values I need and not nothing
+       let xpos = match Console.ReadLine() |> Int32.TryParse with    
+                    |(true,x) -> Some x
+                    |_  -> None
+       printfn "Please input the column number" 
+       let ypos = match Console.ReadLine() |> Int32.TryParse with    
+                    |(true,y) -> Some y
+                    |_  -> None
+       
+       //let strContainsOnlyNumber (s:string) = s |> Seq.forall Char.IsDigit
+       match xpos,ypos with  
+            |Some xpos,Some ypos when (0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;getInputs()
+            |Some xpos,Some ypos -> xpos,ypos       
+            |_ -> printfn "Row %A and Col %A are not integers" xpos ypos;getInputs()
+
+    let rec createPlayer assignedToken =
+        printfn "Player %s input your name" assignedToken
+        let name = Console.ReadLine()
+
+        //Refactor
+        if name = "" then printfn "The name can not be empty";createPlayer assignedToken
+        else if name.Contains(" ") then printfn "The name should not have any spaces, just letters";createPlayer assignedToken
+        else if name |> Seq.forall Char.IsDigit then printfn "The name is only characters";createPlayer assignedToken
+        else if name |> Seq.forall (fun c -> System.Char.IsLetter(c)) then name
+        else  printfn "The name is not available, make sure you only have letters";createPlayer assignedToken
+
     
     let isEmpty newerGrid = newerGrid |> Seq.cast<Cell> |> Seq.mapi (fun i el -> (el, i)) |> Seq.filter (fun (el,i) -> el =  Empty)
 
@@ -71,5 +98,9 @@ module Helper =
         else if hasDrawn x grid then Draw
         else InProgress
 
-    let getNewGrid (grid: Cell [,]) xpos ypos (token:Player) =
-        grid |> Array2D.mapi (fun i1 i2 v -> if i1 = xpos && i2 = ypos then (P token) else v )
+    let getNewGrid (grid: Cell [,])  (pos:int*int) (token:Player) =
+        //grid |> Array2D.mapi (fun i1 i2 v -> if i1 = xpos && i2 = ypos then (P token) else v )
+        let newGrid = Array2D.copy grid
+        let xpos, ypos = pos
+        newGrid.[xpos, ypos] <- P token
+        newGrid
