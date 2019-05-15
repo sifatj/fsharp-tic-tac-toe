@@ -103,3 +103,14 @@ module Helper =
         let xpos, ypos = pos
         newGrid.[xpos, ypos] <- P token
         newGrid
+
+    // record type
+    type PlayerDetails = {
+        PlayerName: string
+        Wins: float 
+        Losses: float 
+    }
+
+    type LeaderBoard = {
+        PlayerData : PlayerDetails []
+    }

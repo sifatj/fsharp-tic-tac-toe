@@ -2,20 +2,7 @@
 module Leaderboard =
     open System.IO
     open FSharp.Json
-
-    // record type
-    type PlayerDetails = {
-        PlayerName: string
-        Wins: float 
-        Losses: float 
-    }
-
-    type LeaderBoard = 
-        {
-            PlayerData : PlayerDetails []
-        }
-        static member GetLeaderBoard (x:LeaderBoard) =
-            sprintf ""
+    open Helper        
 
     // read from json file
     let playerFile = File.ReadAllText("../../PlayerRecords.json")
