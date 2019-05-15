@@ -12,8 +12,8 @@ module Helper =
     
 
     type Player =  
-    |X 
-    |O
+        |X 
+        |O
 
     type Cell = 
         |P of Player
@@ -26,21 +26,22 @@ module Helper =
 
     type playerData = {name:string;pToken:Player} //Player information
 
-    let rec getInputs() = 
+    let parseStringtoSome x = 
+        match x |> Int32.TryParse with    
+            |(true,x) -> Some x
+            |_  -> None
+
+    let rec takePlayerCoord() = 
        printfn "Please input the row number"  //Dificulties - making it more compact ,  when last match expression is done that I get the values I need and not nothing
-       let xpos = match Console.ReadLine() |> Int32.TryParse with    
-                    |(true,x) -> Some x
-                    |_  -> None
+       let xpos = Console.ReadLine() |> parseStringtoSome   
        printfn "Please input the column number" 
-       let ypos = match Console.ReadLine() |> Int32.TryParse with    
-                    |(true,y) -> Some y
-                    |_  -> None
+       let ypos = match Console.ReadLine() |> parseStringtoSome
        
        //let strContainsOnlyNumber (s:string) = s |> Seq.forall Char.IsDigit
        match xpos,ypos with  
             |Some xpos,Some ypos when ((0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)) -> xpos,ypos  
             |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) && (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;getInputs()
-            |_ -> printfn "Row and Col are not integers";getInputs()
+            |_ -> printfn "Row and Col are not integers,try again";takePlayerCoord()
 
     let rec createPlayer assignedToken =
         printfn "Player %s input your name" assignedToken

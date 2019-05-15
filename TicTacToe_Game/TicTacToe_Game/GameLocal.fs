@@ -7,11 +7,11 @@ module GameLocal =
     let rec runGame grid playerX playerO token =
             drawBoard grid
             printfn "Player %A's turn" token           
-            let newGrid = getNewGrid grid (getInputs()) token
+            let newGrid = getNewGrid grid (takePlayerCoord()) token
             let status = checkGridStatus (P token) newGrid
             match status with
-                |Won -> "Good job Player  you won",token //Saves scores
-                |Draw -> "Nice try , it's a draw.",token
+                |Won -> sprintf "Good job player %A you won" token //Saves scores
+                |Draw -> sprintf "Last token inserted by player %A resulted in a draw" token
                 |InProgress -> runGame newGrid playerX playerO (match token with
                                                                       |X -> O
                                                                       |O -> X) // -- Isssue was having indefitiend the type*)
