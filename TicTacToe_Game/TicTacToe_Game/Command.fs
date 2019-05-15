@@ -6,20 +6,24 @@ module Command =
 
     let PlayMessage = @"This is a help message"
     //add spaces
-    let PlayAIPattern = @"^\s*[Pp][Ll][Aa][Yy][Aa][Ii]\s*$"
-    let PlayLocalPattern = @"^\s*[Pp][Ll][Aa][Yy][Ll][Oo][Cc][Aa][Ll]\s*$"
-    let PlayMPPattern = @"^\s*[Pp][Ll][Aa][Yy][Mm][Pp]\s*$"
-    let ViewLeaderboardPattern = @"^\s*[Vv][Ii][Ee][Ww]\s*$" //Modify these to have space
+    let PlayAIHardPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Aa][Ii][ .-]?[Hh][Aa][Rr][Dd]\s*$"
+    let PlayAIEasyPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Aa][Ii][ .-]?[Ee][Aa][Ss][Yy]\s*$"
+    let PlayLocalPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Ll][Oo][Cc][Aa][Ll][ .-]?[Gg][Aa][Mm][Ee]\s*$"
+    let PlayMPPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Mm][Pp][ .-]?[Gg][Aa][Mm][Ee]\s*$"
+    let ViewLeaderboardPattern = @"^\s*[Vv][Ii][Ee][Ww][ .-]?[Ll][Ee][Aa][Dd][Ee][Rr][Bb][Oo][Aa][Rr][Dd]\s*$" //Modify these to have space
    
     type Command = 
-        |PlayAI
+        |PlayAIHard
+        |PlayAIEasy
         |PlayLocal
         |PlayMP
         |ViewLeaderboard
         static member parseCommand x = 
             match x with
-            |ParseRegex PlayAIPattern _->
-                  PlayAI |> Result.Ok
+            |ParseRegex PlayAIHardPattern _->
+                  PlayAIHard |> Result.Ok
+            |ParseRegex PlayAIHardPattern _->
+                  PlayAIEasy |> Result.Ok
             |ParseRegex PlayLocalPattern _->
                   PlayLocal |> Result.Ok
             |ParseRegex PlayMPPattern _->
@@ -32,8 +36,11 @@ module Command =
 
     let runCommand x  =
         match x with
-        |PlayAI ->
-            let result = "Result of Play ai" 
+        |PlayAIEasy ->
+            let result = "Result of Play ai easy" 
+            Result.Ok (sprintf "%s" result)
+        |PlayAIHard ->
+            let result = "Result of Play ai hard" 
             Result.Ok (sprintf "%s" result)
         |PlayLocal ->
             let result = playGameLocal() 
