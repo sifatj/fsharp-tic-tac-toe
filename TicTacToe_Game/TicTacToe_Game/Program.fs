@@ -17,6 +17,7 @@ module Program =
         System.Console.ReadLine() |> (Command.parseCommand >=> runCommand) |> handleResult 
         mainGame()
 
+    
     [<EntryPoint>]
     let main argv = //
         mainGame()

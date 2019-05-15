@@ -44,8 +44,7 @@ module Command =
             Result.Ok (sprintf "%s" result)
         |PlayLocal ->
             let result = playGameLocal() 
-            let (str,token) = result
-            Result.Ok (sprintf "%s %A" str token)
+            Result.Ok (sprintf "%s" result)
         |PlayMP ->
             let result = "Result of Play mp" 
             Result.Ok (sprintf "%s" result)
