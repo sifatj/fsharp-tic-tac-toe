@@ -38,15 +38,14 @@ module Helper =
        
        //let strContainsOnlyNumber (s:string) = s |> Seq.forall Char.IsDigit
        match xpos,ypos with  
-            |Some xpos,Some ypos when (0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;getInputs()
-            |Some xpos,Some ypos -> xpos,ypos       
-            |_ -> printfn "Row %A and Col %A are not integers" xpos ypos;getInputs()
+            |Some xpos,Some ypos when ((0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)) -> xpos,ypos  
+            |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) && (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;getInputs()
+            |_ -> printfn "Row and Col are not integers";getInputs()
 
     let rec createPlayer assignedToken =
         printfn "Player %s input your name" assignedToken
         let name = Console.ReadLine()
 
-        //Refactor
         if name = "" then printfn "The name can not be empty";createPlayer assignedToken
         else if name.Contains(" ") then printfn "The name should not have any spaces, just letters";createPlayer assignedToken
         else if name |> Seq.forall Char.IsDigit then printfn "The name is only characters";createPlayer assignedToken
