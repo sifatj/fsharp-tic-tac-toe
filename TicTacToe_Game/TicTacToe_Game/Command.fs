@@ -3,6 +3,7 @@ module Command =
     open Helper
     open Error
     open GameLocal
+    open Leaderboard
 
     let PlayMessage = @"This is a help message"
     //add spaces
@@ -50,7 +51,7 @@ module Command =
             let result = "Result of Play mp" 
             Result.Ok (sprintf "%s" result)
         |ViewLeaderboard ->
-            let result = "Result of view leaderboard" 
+            let result = viewLeaderboard() 
             Result.Ok (sprintf "%s" result)
         |_ ->
             Result.Error (RunCommandError) 

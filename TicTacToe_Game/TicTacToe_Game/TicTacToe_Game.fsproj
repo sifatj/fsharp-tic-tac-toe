@@ -51,12 +51,16 @@
     <Compile Include="Helper.fs" />
     <Compile Include="Error.fs" />
     <Compile Include="GameLocal.fs" />
+    <Compile Include="Leaderboard.fs" />
     <Compile Include="Command.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
       <HintPath>..\packages\FSharp.Core.4.5.2\lib\net45\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Json">
+      <HintPath>..\packages\FSharp.Json.0.3.7\lib\netstandard2.0\FSharp.Json.dll</HintPath>
     </Reference>
     <Reference Include="FSharpPlus">
       <HintPath>..\packages\FSharpPlus.1.0.0\lib\net45\FSharpPlus.dll</HintPath>
