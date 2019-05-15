@@ -1,0 +1,26 @@
+﻿{
+  "PlayerData": [
+    {
+      "PlayerName": "Sifat",
+      "Wins": 1.0,
+      "Losses": 2.0
+    },
+    {
+      "PlayerName": "Dragos",
+      "Wins": 3.0,
+      "Losses": 2.0
+    },
+    {
+      "PlayerName": "Sabah",
+      "Wins": 1.0,
+      "Losses": 4.0
+    },
+    {
+      "PlayerName": "Prince",
+      "Wins": 2.0,
+      "Losses": 5.0
+    }
+  ]
+}
+
+

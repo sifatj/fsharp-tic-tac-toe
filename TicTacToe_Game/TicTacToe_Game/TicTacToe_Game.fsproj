@@ -54,6 +54,7 @@
     <Compile Include="Leaderboard.fs" />
     <Compile Include="Command.fs" />
     <Compile Include="Program.fs" />
+    <None Include="PlayerRecords.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
