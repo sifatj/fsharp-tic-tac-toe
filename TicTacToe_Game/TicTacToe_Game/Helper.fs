@@ -9,7 +9,7 @@ module Helper =
        then Some (List.tail [ for x in m.Groups -> x.Value ])
        else None
 
-    
+
 
     type Player =  
         |X 
@@ -105,13 +105,14 @@ module Helper =
         newGrid.[xpos, ypos] <- P token
         newGrid
 
-    // record type
+    // Record containing player details
     type PlayerDetails = {
         PlayerName: string
         Wins: float 
         Losses: float 
     }
 
+    // Record containing array of player detail records
     type LeaderBoard = {
         PlayerData : PlayerDetails []
     }

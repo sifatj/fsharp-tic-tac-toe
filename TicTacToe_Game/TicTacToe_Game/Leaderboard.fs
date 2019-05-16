@@ -4,32 +4,25 @@ module Leaderboard =
     open FSharp.Json
     open Helper        
 
-    // read from json file
+    // read from json file - perform file null check??? check json docs
     let playerFile = File.ReadAllText("../../PlayerRecords.json")
-    //printfn "%A" playerFile
-    printfn "----- playerFile -----"
-    printfn "%s" playerFile
+
 
     // deserialize json into F# 
     let deserializedData = Json.deserialize<LeaderBoard> playerFile // json PlayerDetails
-    printfn "----- deserialzedData -----"
-    printfn "%A" deserializedData
     
     // put deserialized data into array ( array of records ) 
     let playerRecordsArray = deserializedData.PlayerData |> Array.map (fun p -> p)
-    printfn "----- playerRecordsArray -----"
-    printfn "%A" playerRecordsArray 
+
     
-    // iterate through the array and print each records 
-    printfn " ---- table ---- "
-    //playerRecordsArray |> Array.iter (fun p -> printf "Name: %s, Wins: %0.0f, Losses: %0.0f\n" p.PlayerName p.Wins p.Losses)  
-    
+    // iterate through the array and print each records    
     printfn "Names Wins Losses";
     playerRecordsArray |> Array.iter (fun p -> printf "%s %0.0f %0.0f\n" p.PlayerName p.Wins p.Losses)
-    // get score ratio
+    
+    // calculate win loss ratio
     let calculateWinLossRatio p = 
         (p.Wins / (p.Wins + p.Losses))
-    // sort list in descending order based on player win ratio 
+    // sort array in descending order based on player win loss ratio 
     let sortPlayerScore arr =  
         arr
         |> Array.sortByDescending (fun p -> calculateWinLossRatio p )
