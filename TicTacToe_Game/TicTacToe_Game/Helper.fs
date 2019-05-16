@@ -104,6 +104,14 @@ module Helper =
         newGrid.[xpos, ypos] <- P token
         newGrid
 
+    let rec takePositions (grid: Cell [,])=
+        let (xpos,ypos) = takePlayerCoord()
+        if grid.[xpos,ypos] = Empty then xpos,ypos
+        else printfn "Slot already taken try again"
+             takePositions grid
+             
+
+
     // record type
     type PlayerDetails = {
         PlayerName: string
