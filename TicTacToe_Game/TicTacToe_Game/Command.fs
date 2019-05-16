@@ -23,7 +23,7 @@ module Command =
             match x with
             |ParseRegex PlayAIHardPattern _->
                   PlayAIHard |> Result.Ok
-            |ParseRegex PlayAIHardPattern _->
+            |ParseRegex PlayAIEasyPattern _->
                   PlayAIEasy |> Result.Ok
             |ParseRegex PlayLocalPattern _->
                   PlayLocal |> Result.Ok

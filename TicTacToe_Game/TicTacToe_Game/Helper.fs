@@ -26,21 +26,21 @@ module Helper =
 
     type playerData = {name:string;pToken:Player} //Player information
 
-    let parseStringtoSome x = 
+    let parseStringToSome x = 
         match x |> Int32.TryParse with    
             |(true,x) -> Some x
             |_  -> None
 
     let rec takePlayerCoord() = 
        printfn "Please input the row number"  //Dificulties - making it more compact ,  when last match expression is done that I get the values I need and not nothing
-       let xpos = Console.ReadLine() |> parseStringtoSome   
+       let xpos = Console.ReadLine() |> parseStringToSome   
        printfn "Please input the column number" 
-       let ypos = match Console.ReadLine() |> parseStringtoSome
+       let ypos = Console.ReadLine() |> parseStringToSome
        
        //let strContainsOnlyNumber (s:string) = s |> Seq.forall Char.IsDigit
        match xpos,ypos with  
             |Some xpos,Some ypos when ((0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)) -> xpos,ypos  
-            |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) && (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;getInputs()
+            |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) && (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;takePlayerCoord()
             |_ -> printfn "Row and Col are not integers,try again";takePlayerCoord()
 
     let rec createPlayer assignedToken =
@@ -83,7 +83,6 @@ module Helper =
 
     let hasDrawn x (grid:Cell [,]) = 
         let available_cells = grid |> Seq.cast<Cell> |> Seq.filter (fun x -> x = Empty)
-        
         Seq.isEmpty available_cells
 
     let drawBoard (board:Cell [,]) = 
