@@ -24,6 +24,11 @@ module Helper =
         |Draw
         |InProgress
 
+    let switchPlayer (p:Player)  = 
+        match p with
+        |X -> O
+        |O -> X
+    
     type playerData = {name:string;pToken:Player} //Player information
 
     let parseStringToSome x = 
@@ -40,7 +45,7 @@ module Helper =
        //let strContainsOnlyNumber (s:string) = s |> Seq.forall Char.IsDigit
        match xpos,ypos with  
             |Some xpos,Some ypos when ((0 <= xpos && xpos <= 2) && (0 <= ypos && ypos <= 2)) -> xpos,ypos  
-            |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) && (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;takePlayerCoord()
+            |Some xpos,Some ypos when ((xpos > 2 || xpos < 0) || (ypos > 2 || ypos < 0))  -> printfn "Row %i and Col %i must be between 0 and 2" xpos ypos;takePlayerCoord()
             |_ -> printfn "Row and Col are not integers,try again";takePlayerCoord()
 
     let rec createPlayer assignedToken =
@@ -78,7 +83,7 @@ module Helper =
         //vertical checks
         |arr when grid.[0, 0] = x && grid.[1, 0] = x && grid.[2, 0] = x || grid.[0, 1] = x && grid.[1, 1] = x && grid.[2, 1] = x || grid.[0, 2] = x && grid.[1, 2] = x && grid.[2, 2] = x -> true
         //diagonal checks
-        |arr when grid.[0, 0] = x && grid.[1, 1] = x && grid.[2, 2] = x || grid.[0, 2] = x && grid.[1, 1] = x && grid.[0, 2] = x -> true
+        |arr when grid.[0, 0] = x && grid.[1, 1] = x && grid.[2, 2] = x || grid.[0, 2] = x && grid.[1, 1] = x && grid.[2, 0] = x -> true
         |_ -> false
 
     let hasDrawn x (grid:Cell [,]) = 
@@ -97,7 +102,7 @@ module Helper =
         else if hasDrawn x grid then Draw
         else InProgress
 
-    let getNewGrid (grid: Cell [,])  (pos:int*int) (token:Player) =
+    let updateGrid (grid: Cell [,])  (pos:int*int) (token:Player) =
         //grid |> Array2D.mapi (fun i1 i2 v -> if i1 = xpos && i2 = ypos then (P token) else v )
         let newGrid = Array2D.copy grid
         let xpos, ypos = pos
@@ -105,16 +110,89 @@ module Helper =
         newGrid
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Record containing player details
 =======
+=======
+
+    let easyAI (available: seq<int*int>) = 
+        let rand = new Random()
+        let checkSeq = rand.Next(available |> Seq.length)
+        let getRandVal = available |> Seq.item checkSeq
+        getRandVal
+
+>>>>>>> DAI
     let rec takePositions (grid: Cell [,])=
         let (xpos,ypos) = takePlayerCoord()
         if grid.[xpos,ypos] = Empty then xpos,ypos
         else printfn "Slot already taken try again"
              takePositions grid
              
+    let block x (grid:Cell[,]) = 
+        match x with
+        | arr when grid.[0,0] = x && grid.[0,1] = x -> (true, (0,2))
+        | arr when grid.[0,1] = x && grid.[0,2] = x -> (true, (0,0))
+        | arr when grid.[1,0] = x && grid.[1,1] = x -> (true, (1,2))
+        | arr when grid.[1,1] = x && grid.[1,2] = x -> (true, (1,0))
+        | arr when grid.[2,0] = x && grid.[2,1] = x -> (true, (2,2))
+        | arr when grid.[2,1] = x && grid.[2,2] = x -> (true, (2,0))
+        | arr when grid.[0,0] = x && grid.[1,0] = x -> (true, (2,0))
+        | arr when grid.[1,0] = x && grid.[2,0] = x -> (true, (0,0))
+        | arr when grid.[0,1] = x && grid.[1,1] = x -> (true, (2,1))
+        | arr when grid.[1,1] = x && grid.[2,1] = x -> (true, (0,1))
+        | arr when grid.[0,2] = x && grid.[1,2] = x -> (true, (2,2))
+        | arr when grid.[1,2] = x && grid.[2,2] = x -> (true, (0,2))
+        | arr when grid.[0,0] = x && grid.[1,1] = x -> (true, (2,2))
+        | arr when grid.[1,1] = x && grid.[2,2] = x -> (true, (0,0))
+        | arr when grid.[0,2] = x && grid.[1,1] = x -> (true, (2,0))
+        | arr when grid.[1,1] = x && grid.[2,0] = x -> (true, (0,2))
+        | arr when grid.[2,0] = x && grid.[2,2] = x -> (true, (2,1))
+        | arr when grid.[0,2] = x && grid.[2,2] = x -> (true, (1,2))
+        | arr when grid.[0,1] = x && grid.[2,1] = x -> (true, (1,1))
+        | arr when grid.[0,0] = x && grid.[2,0] = x -> (true, (1,0))
+        | arr when grid.[0,0] = x && grid.[2,2] = x -> (true, (1,1))
+        | arr when grid.[0,2] = x && grid.[2,0] = x -> (true, (1,1))
+        | arr when grid.[1,0] = x && grid.[1,2] = x -> (true, (1,1))
+        | arr when grid.[0,0] = x && grid.[0,2] = x -> (true, (0,1))
+        |_ -> (false,(0,0))
+
+    let aiMoves grid token = 
+            let other = switchPlayer (token)
+            if fst (block (P other) grid)  
+            then 
+                let move = snd (block (P other) grid)
+                let seq = Seq.empty
+                let bMoves = Seq.append seq [(move)] 
+                bMoves
+            else
+                Seq.empty
+            
+    let anotherAI (available: seq<int*int>) grid token = //From a list of available moves (like coord (0,0) etc)
+                                           //Return a sequence of moves which would result in a win
+                                           //Ex: Go over every move in the list add it to the current grid 
+                                           //If adding that move results in a win then filter 
+                                           //
+
+        //let moves = available |> Seq.map (fun tpl grid token-> updateGrid grid tpl token) |> Seq.filter (fun x -> checkGridStatus x grid = Won)
 
 
+        let moves = available |> Seq.filter (fun (tpl)-> (updateGrid grid tpl token |> checkGridStatus (P token)) = Won)
+
+            
+        //let other = switchPlayer (token) 
+        let aMoves = Seq.append moves (aiMoves grid token)
+        printfn "winning moves!!!!!!!!!!!!!!!!!!!!!!!!!%A" moves
+        printfn "Moves to block!!!!!!!!!!!!!!!!!!!!!! %A" (aiMoves grid token)
+        
+        if Seq.isEmpty aMoves 
+        then 
+            printfn "no moves to play"
+            None
+        else 
+            printfn "i can play these moves %A" aMoves
+            Some (Seq.head aMoves)
+ 
+    
     // record type
 >>>>>>> DAI
     type PlayerDetails = {

@@ -3,10 +3,19 @@ module Command =
     open Helper
     open Error
     open GameLocal
+    open EasyAIGame
+    open HardAIGame
+
     open Leaderboard
 
-    let PlayMessage = @"This is a help message"
+    let HelpMessage = @"You have the following commands:
+     |PlayAIHard
+     |PlayAIEasy
+     |PlayLocal
+     |PlayMP
+     |ViewLeaderboard"
     //add spaces
+    let HelpPattern = @"^\s*[ .-]?[Hh][Ee][Ll][Pp][ .-]?\s*$"
     let PlayAIHardPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Aa][Ii][ .-]?[Hh][Aa][Rr][Dd]\s*$"
     let PlayAIEasyPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Aa][Ii][ .-]?[Ee][Aa][Ss][Yy]\s*$"
     let PlayLocalPattern = @"^\s*[Pp][Ll][Aa][Yy][ .-]?[Ll][Oo][Cc][Aa][Ll][ .-]?[Gg][Aa][Mm][Ee]\s*$"
@@ -19,6 +28,7 @@ module Command =
         |PlayLocal
         |PlayMP
         |ViewLeaderboard
+        |Help
         static member parseCommand x = 
             match x with
             |ParseRegex PlayAIHardPattern _->
@@ -31,6 +41,8 @@ module Command =
                   PlayMP |> Result.Ok
             |ParseRegex ViewLeaderboardPattern _->
                   ViewLeaderboard |> Result.Ok
+            |ParseRegex HelpPattern _->
+                  Help |> Result.Ok
             |""-> BlankError |> Result.Error
             |_ -> ParseError x |> Result.Error
 
@@ -38,10 +50,10 @@ module Command =
     let runCommand x  =
         match x with
         |PlayAIEasy ->
-            let result = "Result of Play ai easy" 
+            let result = playEasyAI() 
             Result.Ok (sprintf "%s" result)
         |PlayAIHard ->
-            let result = "Result of Play ai hard" 
+            let result = playHardAI()
             Result.Ok (sprintf "%s" result)
         |PlayLocal ->
             let result = playGameLocal() 
@@ -52,6 +64,8 @@ module Command =
         |ViewLeaderboard ->
             let result = viewLeaderboard() 
             Result.Ok (sprintf "%s" result)
+        |Help ->
+            Result.Ok (HelpMessage)
         |_ ->
             Result.Error (RunCommandError) 
 
