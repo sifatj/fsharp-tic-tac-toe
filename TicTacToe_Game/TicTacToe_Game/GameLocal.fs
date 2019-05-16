@@ -12,7 +12,7 @@ module GameLocal =
             let xpos = Console.ReadLine() |> int  //tryParse later on for better input
             printfn "Please input the column number"
             let ypos = Console.ReadLine() |> int
-            let newGrid = getNewGrid grid xpos ypos token
+            let newGrid = updateGrid grid (xpos, ypos) token
             let status = checkGridStatus (P token) newGrid
             match status with
             |Won -> "Good job Player  you won",token

@@ -51,6 +51,8 @@
     <Compile Include="Helper.fs" />
     <Compile Include="Error.fs" />
     <Compile Include="GameLocal.fs" />
+    <Compile Include="EasyAIGame.fs" />
+    <Compile Include="HardAIGame.fs" />
     <Compile Include="Command.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
