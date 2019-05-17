@@ -109,11 +109,6 @@ module Helper =
         newGrid.[xpos, ypos] <- P token
         newGrid
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    // Record containing player details
-=======
-=======
 
     let easyAI (available: seq<int*int>) = 
         let rand = new Random()
@@ -121,7 +116,7 @@ module Helper =
         let getRandVal = available |> Seq.item checkSeq
         getRandVal
 
->>>>>>> DAI
+
     let rec takePositions (grid: Cell [,])=
         let (xpos,ypos) = takePlayerCoord()
         if grid.[xpos,ypos] = Empty then xpos,ypos
@@ -193,8 +188,6 @@ module Helper =
             Some (Seq.head aMoves)
  
     
-    // record type
->>>>>>> DAI
     type PlayerDetails = {
         PlayerName: string
         Wins: float 
