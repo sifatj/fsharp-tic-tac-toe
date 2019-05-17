@@ -43,6 +43,7 @@ module Helper =
         |(_, y) when y = 8 -> (2, 2)
         |_ -> (20, 20)
         )
+
     //let cells_tuple () = (Array2D.create 3 3 Empty |> Seq.cast<Cell> |> Seq.filter (fun (el i) -> el = Empty)
     //)
     let hasWon x (grid:Cell [,]) = 
@@ -81,8 +82,8 @@ module Helper =
     let easyAI (available: seq<int*int>) = 
         let rand = new Random()
         let checkSeq = rand.Next(available |> Seq.length)
-        let getRandVal = available |> Seq.item checkSeq
-        getRandVal
+        let RandVal = available |> Seq.item checkSeq
+        RandVal
 (*
     let hardAI (available: seq<int*int>) = 
         if available <> []
@@ -147,29 +148,14 @@ module Helper =
         
             
 
-    let anotherAI (available: seq<int*int>) grid token = //From a list of available moves (like coord (0,0) etc)
-                                           //Return a sequence of moves which would result in a win
-                                           //Ex: Go over every move in the list add it to the current grid 
-                                           //If adding that move results in a win then filter 
-                                           //
-
-        //let moves = available |> Seq.map (fun tpl grid token-> updateGrid grid tpl token) |> Seq.filter (fun x -> checkGridStatus x grid = Won)
-
-
+    let hardAI (available: seq<int*int>) grid token = 
         let moves = available |> Seq.filter (fun (tpl)-> (updateGrid grid tpl token |> checkGridStatus (P token)) = Won)
 
-            
-        //let other = switchPlayer (token) 
         let aMoves = Seq.append moves (aiMoves grid token)
-        printfn "winning moves!!!!!!!!!!!!!!!!!!!!!!!!!%A" moves
-        printfn "Moves to block!!!!!!!!!!!!!!!!!!!!!! %A" (aiMoves grid token)
-        
         if Seq.isEmpty aMoves 
         then 
-            printfn "no moves to play"
             None
         else 
-            printfn "i can play these moves %A" aMoves
             Some (Seq.head aMoves)
 
    

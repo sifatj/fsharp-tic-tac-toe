@@ -2,22 +2,17 @@
 module HardAIGame = 
     open Helper
     open System
-    //using mutually recursive func (week 3 lab 1)
+    //using mutually recursive func 
     let rec AIupdate grid (token:Player) = 
             let avail = isEmpty grid |> ToTuple 
-            let result = anotherAI avail grid token
+            let result = hardAI avail grid token
             let ai = avail |> easyAI
             let move = 
                 match result with 
                 |None -> 
-                 printfn"no moves so random pick"
                  ai
                 |Some (xpos,ypos) -> (xpos,ypos)
-            //let avail = isEmpty grid |> ToTuple |> easyAI
             let xpos,ypos = move
-            //let newGrid = updateGrid grid (xpos, ypos) token
-            //let status = checkGridStatus (P token) newGrid
-            //checks if move is available 
             if Seq.contains move avail
             then
                 let newGrid = updateGrid grid (xpos, ypos) token
@@ -30,21 +25,15 @@ module HardAIGame =
                 |InProgress -> updateGame newGrid (switchPlayer token)
             else
                 let newMove = easyAI avail
-                printfn "use this move insteaddddddd %A" newMove
                 let newGrid1 = updateGrid grid newMove token
                 let status = checkGridStatus (P token) newGrid1
                 match status with
                 |Won -> 
                 drawBoard newGrid1 
-                "Computer won sorry", token
-                |Draw -> "It's a draw sorry", token
+                "Computer won", token
+                |Draw -> "It's a draw", token
                 |InProgress -> updateGame newGrid1 (switchPlayer token)
 
-                //"Position not available", token
-                //updateGrid grid ai token
-
-                //AIupdate grid token
-                
 
     and updateGame grid (token:Player) = 
             drawBoard grid
@@ -69,7 +58,6 @@ module HardAIGame =
                 let r,s = "Position not available", token
                 printfn "%s %A" r s
                 updateGame grid token
-                //"Position not available!!!!!!!", token
                 
             
 

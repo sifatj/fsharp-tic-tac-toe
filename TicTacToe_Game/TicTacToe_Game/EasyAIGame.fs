@@ -2,7 +2,7 @@
 module EasyAIGame = 
     open Helper
     open System
-    //using mutually recursive func (week 3 lab 1)
+    //using mutually recursive func 
     let rec AIupdate grid (token:Player) =  
             let avail = isEmpty grid |> ToTuple |> easyAI
             let xpos,ypos = avail
@@ -34,7 +34,6 @@ module EasyAIGame =
                 let r,s = "Position not available", token
                 printfn "%s %A" r s
                 updateGame grid token
-                //"Position not available!!!!!!!", token
                 
             
 
