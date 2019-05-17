@@ -113,8 +113,8 @@ module Helper =
     let easyAI (available: seq<int*int>) = 
         let rand = new Random()
         let checkSeq = rand.Next(available |> Seq.length)
-        let getRandVal = available |> Seq.item checkSeq
-        getRandVal
+        let randVal = available |> Seq.item checkSeq
+        randVal
 
 
     let rec takePositions (grid: Cell [,])=
