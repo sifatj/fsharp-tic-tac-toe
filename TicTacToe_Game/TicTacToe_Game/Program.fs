@@ -13,7 +13,7 @@ module Program =
                 err |> Error.GetErrorMessage |> printfn "%s"
 
     let rec mainGame() = 
-        printf "Please input the type of game you wish to play or view leaderboard (AI Hard,AI Easy,LocalGame,MPGame,Leaderboard): "
+        printf "Please input the type of game you wish to play or view leaderboard (Type help for more details): "
         System.Console.ReadLine() |> (Command.parseCommand >=> runCommand) |> handleResult 
         mainGame()
 
