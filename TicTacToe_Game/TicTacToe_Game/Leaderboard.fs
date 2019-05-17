@@ -4,30 +4,43 @@ module Leaderboard =
     open FSharp.Json
     open Helper        
 
-    // read from json file - perform file null check??? check json docs
-    let playerFile = File.ReadAllText("../../PlayerRecords.json")
+    // Relative filepath for json file
+    let playerRecordsFilePath:string = "../../PlayerRecords.json"
 
+    // Read from all lines from json file and store inside this value.
+    // Catch exception when file not found.
+    let playerRecordsFile:string = 
+        try 
+            File.ReadAllText(playerRecordsFilePath)
+        with
+            | :? System.IO.FileNotFoundException -> "Error: File not found."
 
-    // deserialize json into F# 
-    let deserializedData = Json.deserialize<LeaderBoard> playerFile // json PlayerDetails
+    // Deserialize player json data
+    let getPlayerRecords:PlayerRecords = Json.deserialize<PlayerRecords> playerRecordsFile 
     
-    // put deserialized data into array ( array of records ) 
-    let playerRecordsArray = deserializedData.PlayerData |> Array.map (fun p -> p)
+    // Put deserialized data into array to create array of records 
+    let playerRecordsArray = getPlayerRecords.PlayerData |> Array.map (fun p -> p)
+    
+    // Calculate score based off win loss ratio 
+    let calculateWinLossRatio player = 
+        (float(player.Wins) / float((player.Wins + player.Losses)))
 
-    
-    // iterate through the array and print each records    
-    printfn "Names Wins Losses";
-    playerRecordsArray |> Array.iter (fun p -> printf "%s %0.0f %0.0f\n" p.PlayerName p.Wins p.Losses)
-    
-    // calculate win loss ratio
-    let calculateWinLossRatio p = 
-        (p.Wins / (p.Wins + p.Losses))
-    // sort array in descending order based on player win loss ratio 
-    let sortPlayerScore arr =  
+    // Sort players in descending order based on player win loss ratio and return the top 3 players
+    let sortByPlayerScores arr =  
         arr
         |> Array.sortByDescending (fun p -> calculateWinLossRatio p )
+        |> Array.take 3
+    
+    // Array of top players sorted by their score
+    let highestScoringPlayers = sortByPlayerScores playerRecordsArray
+  
+    // Concatenate strings from each element in array
+    let concatStr strSequence = Array.fold (+) "" strSequence
 
-    let sortedArray = sortPlayerScore playerRecordsArray
-    printfn "SORTED Array: \n  %A" sortedArray
 
-    let viewLeaderboard () = "This is the leaderboard"
+    // Prints the leaderboard which contains player name, wins and losses for the top 3 players 
+    let viewLeaderboard () = 
+        printf  "----- Leaderboard -----" 
+        printfn "Name   Wins  Losses"
+        highestScoringPlayers |> Array.map (fun p -> sprintf "%s   %d    %d\n" p.PlayerName p.Wins p.Losses) |> concatStr
+        

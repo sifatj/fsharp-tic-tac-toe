@@ -2,23 +2,23 @@
   "PlayerData": [
     {
       "PlayerName": "Sifat",
-      "Wins": 1.0,
-      "Losses": 2.0
+      "Wins": 1,
+      "Losses": 2
     },
     {
       "PlayerName": "Dragos",
-      "Wins": 3.0,
-      "Losses": 2.0
+      "Wins": 3,
+      "Losses": 2
     },
     {
       "PlayerName": "Sabah",
-      "Wins": 1.0,
-      "Losses": 4.0
+      "Wins": 1,
+      "Losses": 4
     },
     {
       "PlayerName": "Prince",
-      "Wins": 2.0,
-      "Losses": 5.0
+      "Wins": 2,
+      "Losses": 5
     }
   ]
 }
