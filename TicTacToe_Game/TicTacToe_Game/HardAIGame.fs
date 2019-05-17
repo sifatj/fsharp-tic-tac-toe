@@ -2,6 +2,8 @@
 module HardAIGame = 
     open Helper
     open System
+    open ChangePlayerRecords
+    let jsonFile  = "../../PlayerRecords.json"
     let rec AIupdate grid (token:Player) (player:playerData)= 
             let avail = isEmpty grid |> ToTuple 
             let result = hardAI avail grid token
@@ -47,6 +49,7 @@ module HardAIGame =
                 let status = checkGridStatus (P token) newGrid
                 match status with
                 |Won -> 
+                
                 drawBoard newGrid
                 sprintf "Good job Player %A you won" token
                 |Draw -> sprintf "Nice try %A is a draw" token

@@ -2,7 +2,8 @@
 module EasyAIGame = 
     open Helper
     open System
-
+    open ChangePlayerRecords
+    let jsonFile  = "../../PlayerRecords.json"
     let rec AIupdate grid (token:Player) (player:playerData)=  
             let avail = isEmpty grid |> ToTuple |> easyAI
             let xpos,ypos = avail
@@ -25,7 +26,6 @@ module EasyAIGame =
                 let status = checkGridStatus (P token) newGrid
                 match status with
                 |Won ->  
-                //Save score  player is a record boi
                 sprintf "Good job Player %A you won" token
                 |Draw -> sprintf "Nice try %A is a draw" token
                 |InProgress -> AIupdate newGrid (switchPlayer token) player

@@ -6,6 +6,7 @@ module TicTacToeGame =
     open TicTacToe_Game.EasyAIGame
     open TicTacToe_Game.HardAIGame
     open FsCheck
+    open System.IO
 
     [<Test>]
     let ``Check parsing a string to integer`` () =
@@ -153,4 +154,6 @@ module TicTacToeGame =
     [<Test>]
     let ``pick right move to block player from win`` () =
         Assert.AreEqual((true, (2,1)), block (P X) blockGrid)
+
+
    

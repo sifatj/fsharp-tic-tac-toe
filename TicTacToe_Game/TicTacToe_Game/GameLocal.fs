@@ -2,8 +2,8 @@
 module GameLocal =
     open Helper
     open System
-
-    let testG () = ()
+    open ChangePlayerRecords
+    let jsonFile  = "../../PlayerRecords.json"
     let rec runGame grid playerX playerO token =
             drawBoard grid
             printfn "Player %A's turn" token           
@@ -11,7 +11,8 @@ module GameLocal =
             let status = checkGridStatus (P token) newGrid
             match status with
                 |Won -> 
-                testG()
+                changePlayerRecords playerX.name jsonFile (checkGridStatus (P playerX.pToken) grid)
+                changePlayerRecords playerO.name jsonFile (checkGridStatus (P playerO.pToken) grid)
                 sprintf "Good job player %A you won" token //Saves scores
                 |Draw -> sprintf "Last token inserted by player %A resulted in a draw" token
                 |InProgress -> runGame newGrid playerX playerO (match token with

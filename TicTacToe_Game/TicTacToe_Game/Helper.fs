@@ -22,7 +22,10 @@ module Helper =
     type Status = 
         |Won 
         |Draw
+        |Lost
         |InProgress
+
+
 
     let switchPlayer (p:Player)  = 
         match p with
@@ -177,11 +180,16 @@ module Helper =
         else 
             Some (Seq.head aMoves)
  
+    let hasLost (x:Cell) (grid:Cell [,]): bool = 
+        let otherPlayer =  (match x with
+                                |P X -> O
+                                |P O -> X)
+        hasWon (P otherPlayer) grid    
     
     type PlayerDetails = {
         PlayerName: string
-        Wins: int
-        Losses: int 
+        mutable Wins: int
+        mutable Losses: int 
     }
 
     // Record containing array of player detail records

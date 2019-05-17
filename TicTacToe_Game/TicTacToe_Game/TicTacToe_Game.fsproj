@@ -50,6 +50,7 @@
     <Content Include="packages.config" />
     <Compile Include="Helper.fs" />
     <Compile Include="Error.fs" />
+    <Compile Include="ChangePlayerRecord.fs" />
     <Compile Include="GameLocal.fs" />
     <Compile Include="Leaderboard.fs" />
     <Compile Include="HardAIGame.fs" />
@@ -67,6 +68,9 @@
     </Reference>
     <Reference Include="FSharpPlus">
       <HintPath>..\packages\FSharpPlus.1.0.0\lib\net45\FSharpPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Json">
+      <HintPath>..\packages\JSON.1.0.1\lib\net40\Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
