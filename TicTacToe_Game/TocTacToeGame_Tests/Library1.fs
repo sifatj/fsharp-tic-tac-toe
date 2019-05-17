@@ -100,7 +100,13 @@ module TicTacToeGame =
         let expected = float (1) / float (1 + 4)
         let actual = calculateWinLossRatio playerRecord
         Assert.AreNotEqual(expected, actual)
-
+    
+    [<Test>]
+    let ``Concat array of strings`` () =
+        let concatStr sequence = Array.fold (+) "" sequence
+        let a = "a b c"
+        StringAssert.Contains(a, concatStr [|"a b c"|]  )
+    (* Leaderboard.fs file tests end*)
 
     let grid = 
         array2D [
