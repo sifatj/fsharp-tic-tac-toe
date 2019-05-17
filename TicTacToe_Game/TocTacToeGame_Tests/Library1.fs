@@ -58,4 +58,4 @@ module TicTacToeGame =
                 [ Empty; Empty; P X ]
                 [ P X; P X; Empty ]
             ]
-        Assert.AreEqual(newGrid,getNewGrid grid (0,0) X )
+        Assert.AreEqual(newGrid,updateGrid grid (0,0) X )
