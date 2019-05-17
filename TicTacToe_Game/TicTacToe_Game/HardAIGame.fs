@@ -10,7 +10,7 @@ module HardAIGame =
             let move = 
                 match result with 
                 |None -> 
-                 printfn"no moves so random pick"
+                 //printfn"no moves so random pick"
                  ai
                 |Some (xpos,ypos) -> (xpos,ypos)
             //let avail = isEmpty grid |> ToTuple |> easyAI
@@ -30,7 +30,7 @@ module HardAIGame =
                 |InProgress -> updateGame newGrid player
             else
                 let newMove = easyAI avail
-                printfn "use this move insteaddddddd %A" newMove
+                //printfn "use this move insteaddddddd %A" newMove
                 let newGrid1 = updateGrid grid newMove token
                 let status = checkGridStatus (P token) newGrid1
                 match status with

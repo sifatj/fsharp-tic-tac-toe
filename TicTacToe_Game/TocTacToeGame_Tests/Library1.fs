@@ -58,8 +58,7 @@ module TicTacToeGame =
                 [ Empty; Empty; P X ]
                 [ P X; P X; Empty ]
             ]
-<<<<<<< HEAD
-        Assert.AreEqual(newGrid,getNewGrid grid (0,0) X )
+        Assert.AreEqual(newGrid,updateGrid grid (0,0) X )
 
 
 
@@ -98,6 +97,5 @@ module TicTacToeGame =
         let expected = float (1) / float (1 + 4)
         let actual = calculateWinLossRatio playerRecord
         Assert.AreNotEqual(expected, actual)
-=======
-        Assert.AreEqual(newGrid,updateGrid grid (0,0) X )
->>>>>>> develop
+
+   

@@ -176,15 +176,14 @@ module Helper =
             
         //let other = switchPlayer (token) 
         let aMoves = Seq.append moves (aiMoves grid token)
-        printfn "winning moves!!!!!!!!!!!!!!!!!!!!!!!!!%A" moves
-        printfn "Moves to block!!!!!!!!!!!!!!!!!!!!!! %A" (aiMoves grid token)
+      
         
         if Seq.isEmpty aMoves 
         then 
-            printfn "no moves to play"
+            //printfn "no moves to play"
             None
         else 
-            printfn "i can play these moves %A" aMoves
+            //printfn "i can play these moves %A" aMoves
             Some (Seq.head aMoves)
  
     
