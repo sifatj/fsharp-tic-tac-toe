@@ -132,7 +132,8 @@ module TicTacToeGame =
             (x>0 && x<=2 && y>0 && y<=2) 
         let prop_ContainedInSequence xs =
             easyAI xs |> fun cell -> Seq.contains cell xs
-
+        //Check.QuickThrowOnFailure prop_ContainedInSequence
+        //this only tests one seq
         Assert.IsTrue (prop_ContainedInSequence availableCells)
 
 
