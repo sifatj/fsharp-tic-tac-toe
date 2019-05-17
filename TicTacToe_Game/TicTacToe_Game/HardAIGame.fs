@@ -2,22 +2,17 @@
 module HardAIGame = 
     open Helper
     open System
-    //using mutually recursive func (week 3 lab 1)
     let rec AIupdate grid (token:Player) (player:playerData)= 
             let avail = isEmpty grid |> ToTuple 
-            let result = anotherAI avail grid token
+            let result = hardAI avail grid token
             let ai = avail |> easyAI
             let move = 
                 match result with 
                 |None -> 
-                 //printfn"no moves so random pick"
                  ai
                 |Some (xpos,ypos) -> (xpos,ypos)
-            //let avail = isEmpty grid |> ToTuple |> easyAI
             let xpos,ypos = move
-            //let newGrid = updateGrid grid (xpos, ypos) token
-            //let status = checkGridStatus (P token) newGrid
-            //checks if move is available 
+  
             if Seq.contains move avail
             then
                 let newGrid = updateGrid grid (xpos, ypos) token
@@ -40,12 +35,6 @@ module HardAIGame =
                 |Draw -> sprintf "It's a draw sorry"
                 |InProgress -> updateGame newGrid1 player
 
-                //"Position not available", token
-                //updateGrid grid ai token
-
-                //AIupdate grid token
-                
-
     and updateGame grid (player:playerData) = 
             drawBoard grid
             let token = player.pToken
@@ -66,8 +55,7 @@ module HardAIGame =
                 let r,s = "Position not available", token
                 printfn "%s %A" r s
                 updateGame grid player
-                //"Position not available!!!!!!!", token
-                
+
             
 
     let playHardAI() =

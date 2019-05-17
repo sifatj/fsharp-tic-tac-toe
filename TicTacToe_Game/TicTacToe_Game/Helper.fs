@@ -162,28 +162,19 @@ module Helper =
             else
                 Seq.empty
             
-    let anotherAI (available: seq<int*int>) grid token = //From a list of available moves (like coord (0,0) etc)
-                                           //Return a sequence of moves which would result in a win
-                                           //Ex: Go over every move in the list add it to the current grid 
-                                           //If adding that move results in a win then filter 
-                                           //
-
-        //let moves = available |> Seq.map (fun tpl grid token-> updateGrid grid tpl token) |> Seq.filter (fun x -> checkGridStatus x grid = Won)
-
+    let hardAI  (available: seq<int*int>) grid token = 
 
         let moves = available |> Seq.filter (fun (tpl)-> (updateGrid grid tpl token |> checkGridStatus (P token)) = Won)
-
-            
-        //let other = switchPlayer (token) 
+ 
+   
         let aMoves = Seq.append moves (aiMoves grid token)
       
         
         if Seq.isEmpty aMoves 
         then 
-            //printfn "no moves to play"
+
             None
         else 
-            //printfn "i can play these moves %A" aMoves
             Some (Seq.head aMoves)
  
     
