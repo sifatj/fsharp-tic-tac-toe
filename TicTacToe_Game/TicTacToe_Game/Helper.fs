@@ -108,11 +108,11 @@ module Helper =
     // Record containing player details
     type PlayerDetails = {
         PlayerName: string
-        Wins: float 
-        Losses: float 
+        Wins: int
+        Losses: int 
     }
 
     // Record containing array of player detail records
-    type LeaderBoard = {
+    type PlayerRecords = {
         PlayerData : PlayerDetails []
     }
